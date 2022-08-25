@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:proplus/utils.dart';
 import 'package:proplus/view/loginscreen.dart';
-import 'package:proplus/view/productkistscreen.dart';
+
 import 'package:proplus/viewmodel/loginviewmodel.dart';
+import 'package:proplus/viewmodel/productlistviewmodel.dart';
 import 'package:provider/provider.dart';
+
 
 void main() async {
   runApp(const MyApp());
@@ -24,15 +27,15 @@ class MyApp extends StatelessWidget {
           minTextAdapt: true,
           splitScreenMode: true,
           builder: (context, child) {
-            return Consumer<LoginViewModel>(builder: (context, val, child) {
               return MaterialApp(
-                title: 'Flutter Demo',
+                debugShowCheckedModeBanner: false,
+                title: 'Pro plusDemo',
+                scaffoldMessengerKey: Utils.messengerKey,
                 theme: ThemeData(
                   primarySwatch: Colors.blue,
                 ),
                 home: const LoginScreen(),
               );
-            });
           }),
     );
   }

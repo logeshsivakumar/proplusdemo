@@ -10,6 +10,7 @@ import 'package:proplus/customwidgets/textformfield.dart';
 import 'package:proplus/service.dart';
 import 'package:proplus/view/productkistscreen.dart';
 import 'package:proplus/viewmodel/loginviewmodel.dart';
+import 'package:proplus/viewmodel/productlistviewmodel.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -139,11 +140,13 @@ class _LoginScreenState extends State<LoginScreen> {
           padding: EdgeInsets.only(top: 20.h),
           child: InkWell(
             onTap: () async {
+              ProductListViewModel p =ProductListViewModel();
               var provider =
                   Provider.of<LoginViewModel>(context, listen: false);
               if (validateForm() == true) {
                 var result =
                     await provider.getLoginURl(email.text, password.text);
+                //p.fetchProductData();
                 if (result == "SUCCESS") {
                   Navigator.push(
                     context,
