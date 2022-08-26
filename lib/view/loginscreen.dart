@@ -140,7 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
           padding: EdgeInsets.only(top: 20.h),
           child: InkWell(
             onTap: () async {
-              ProductListViewModel p =ProductListViewModel();
+              ProductListViewModel p = ProductListViewModel();
               var provider =
                   Provider.of<LoginViewModel>(context, listen: false);
               if (validateForm() == true) {
@@ -148,7 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     await provider.getLoginURl(email.text, password.text);
                 //p.fetchProductData();
                 if (result == "SUCCESS") {
-                  Navigator.push(
+                  Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                         builder: (context) => const ProductListScreen()),

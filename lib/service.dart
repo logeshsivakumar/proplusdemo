@@ -9,7 +9,7 @@ enum UrlType { get, post }
 class DioService {
 
   Future<dynamic> getHttp(String baseUrl, String requestType,
-      {Map<String, dynamic>? result}) async {
+      {Map<String, dynamic>? result,String? id}) async {
     Response? response;
     try {
       switch (requestType) {
@@ -18,7 +18,12 @@ class DioService {
               .post('https://fakestoreapi.com/auth/login', data: result);
           break;
         case RequestType.getRequestType:
-          response = await Dio().get(baseUrl);
+          if(id!=null){
+            response = await Dio().get(baseUrl+id);
+          }else{
+            response = await Dio().get(baseUrl);
+          }
+
           break;
       }
     } catch (e) {

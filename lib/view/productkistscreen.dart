@@ -5,6 +5,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:proplus/constants/constants.dart';
 import 'package:proplus/model/productlistmodel.dart';
+import 'package:proplus/view/productviewpage.dart';
 import 'package:proplus/viewmodel/productlistviewmodel.dart';
 import 'package:provider/provider.dart';
 
@@ -69,18 +70,27 @@ class _ProductListScreenState extends State<ProductListScreen> {
                           physics: const ScrollPhysics(),
                           crossAxisSpacing: 12,
                           itemBuilder: (context, i) {
-                            return Card(
-                              margin: EdgeInsets.zero,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.sp)),
-                              child: Container(
-                                height: i % 2 == 0 ? 230.h : 150.h,
-                                margin: EdgeInsets.only(
-                                    top: 5.h,
-                                    bottom: 35.h,
-                                    left: 5.w,
-                                    right: 5.w),
-                                child: imageView(dataSnapshot.data![i]),
+                            return InkWell(
+                              onTap: (){
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ProductViewPage(id:dataSnapshot.data![i].id.toString())),
+                                );
+                              },
+                              child: Card(
+                                margin: EdgeInsets.zero,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8.sp)),
+                                child: Container(
+                                  height: i % 2 == 0 ? 230.h : 150.h,
+                                  margin: EdgeInsets.only(
+                                      top: 5.h,
+                                      bottom: 35.h,
+                                      left: 5.w,
+                                      right: 5.w),
+                                  child: imageView(dataSnapshot.data![i]),
+                                ),
                               ),
                             );
                           },

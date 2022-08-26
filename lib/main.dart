@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:proplus/utils.dart';
@@ -9,6 +10,15 @@ import 'package:provider/provider.dart';
 
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  AwesomeNotifications().initialize(null, [
+    NotificationChannel(channelKey: "key1",
+        channelName: "Pro Plus",
+        channelDescription: "Local notification",
+        defaultColor: Colors.black,
+        ledColor: Colors.white
+    )
+  ]);
   runApp(const MyApp());
 }
 
