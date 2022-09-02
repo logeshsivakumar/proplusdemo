@@ -36,7 +36,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
     ];
     return Scaffold(
       backgroundColor: Colors.white,
-      body: FutureBuilder(
+      body: FutureBuilder<List<ProductListModel>>(
         future: dataFuture,
         builder: (context, dataSnapshot) {
           if (dataSnapshot.connectionState == ConnectionState.waiting) {

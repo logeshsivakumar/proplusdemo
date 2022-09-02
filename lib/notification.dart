@@ -10,13 +10,10 @@ class NotificationLocal{
         id: 1,
         channelKey: 'key1',
       title: title,
-      body: "Price:"+price,
+      body: "Price:$price",
       bigPicture: img,
       notificationLayout: NotificationLayout.BigPicture
     )
-
     );
   }
-
-
 }

@@ -21,7 +21,7 @@ class _ProductViewPageState extends State<ProductViewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder(
+      body: FutureBuilder<ParticularProductModel>(
           future: productListViewModel.fetchSelectedProductData(widget.id),
           builder: (context, dataSnapshot) {
             if (dataSnapshot.connectionState == ConnectionState.waiting) {
@@ -217,7 +217,7 @@ class _ProductViewPageState extends State<ProductViewPage> {
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(top: 10.h),
+          padding: EdgeInsets.only(top: 7.h),
           child: InkWell(
             onTap: () {
               NotificationLocal.localNotification(title, price, image);
