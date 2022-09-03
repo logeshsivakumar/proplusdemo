@@ -7,7 +7,7 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:proplus/constants/constants.dart';
 import 'package:proplus/customwidgets/textformfield.dart';
-import 'package:proplus/service.dart';
+import 'package:proplus/service/apiservice.dart';
 import 'package:proplus/view/productkistscreen.dart';
 import 'package:proplus/viewmodel/loginviewmodel.dart';
 import 'package:proplus/viewmodel/productlistviewmodel.dart';

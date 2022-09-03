@@ -4,9 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:proplus/constants/constants.dart';
 import 'package:proplus/model/particularproductmodel.dart';
-import 'package:proplus/model/productlistmodel.dart';
 import 'package:proplus/notification.dart';
 import 'package:proplus/viewmodel/productlistviewmodel.dart';
+import 'package:provider/provider.dart';
 
 class ProductViewPage extends StatefulWidget {
   const ProductViewPage({Key? key, required this.id}) : super(key: key);
@@ -21,47 +21,50 @@ class _ProductViewPageState extends State<ProductViewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<ParticularProductModel>(
-          future: productListViewModel.fetchSelectedProductData(widget.id),
-          builder: (context, dataSnapshot) {
-            if (dataSnapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else {
-              if (dataSnapshot.error != null) {
+      body: Consumer<ProductListViewModel>(builder: (context, provider, child) {
+        return FutureBuilder<ParticularProductModel>(
+            future: provider.fetchSelectedProductData(widget.id),
+            builder: (context, dataSnapshot) {
+              if (dataSnapshot.connectionState == ConnectionState.waiting) {
                 return const Center(
-                  child: Text('An error occured'),
+                  child: CircularProgressIndicator(),
                 );
               } else {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    customAppbar(dataSnapshot.data!.category.toString()),
-                    Flexible(
-                        flex: 5,
-                        child: imageView(
-                          dataSnapshot.data!.image.toString(),
-                        )),
-                    Flexible(
-                        flex: 1,
-                        child: ratingBar(
-                            dataSnapshot.data!.rating!.rate!.toDouble())),
-                    Flexible(
-                        flex: 3,
-                        child: titleWidget(dataSnapshot.data!.title.toString(),
-                            dataSnapshot.data!.description.toString())),
-                    Flexible(
-                        flex: 2,
-                        child: footerBar(
-                            dataSnapshot.data!.price.toString(),
-                            dataSnapshot.data!.title.toString(),
-                            dataSnapshot.data!.image.toString()))
-                  ],
-                );
+                if (dataSnapshot.error != null) {
+                  return const Center(
+                    child: Text('An error occured'),
+                  );
+                } else {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      customAppbar(dataSnapshot.data!.category.toString()),
+                      Flexible(
+                          flex: 5,
+                          child: imageView(
+                            dataSnapshot.data!.image.toString(),
+                          )),
+                      Flexible(
+                          flex: 1,
+                          child: ratingBar(
+                              dataSnapshot.data!.rating!.rate!.toDouble())),
+                      Flexible(
+                          flex: 3,
+                          child: titleWidget(
+                              dataSnapshot.data!.title.toString(),
+                              dataSnapshot.data!.description.toString())),
+                      Flexible(
+                          flex: 2,
+                          child: footerBar(
+                              dataSnapshot.data!.price.toString(),
+                              dataSnapshot.data!.title.toString(),
+                              dataSnapshot.data!.image.toString()))
+                    ],
+                  );
+                }
               }
-            }
-          }),
+            });
+      }),
     );
   }
 

@@ -1,7 +1,6 @@
-import 'package:dio/dio.dart';
 import 'package:proplus/constants/constants.dart';
 import 'package:proplus/constants/urlconstants.dart';
-import 'package:proplus/service.dart';
+import 'package:proplus/service/apiservice.dart';
 
 
 class LoginViewModel {

@@ -17,14 +17,6 @@ class ProductListScreen extends StatefulWidget {
 }
 
 class _ProductListScreenState extends State<ProductListScreen> {
-  late Future<List<ProductListModel>> dataFuture;
-  ProductListViewModel productListViewModel = ProductListViewModel();
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    dataFuture = productListViewModel.fetchProductData();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,75 +28,81 @@ class _ProductListScreenState extends State<ProductListScreen> {
     ];
     return Scaffold(
       backgroundColor: Colors.white,
-      body: FutureBuilder<List<ProductListModel>>(
-        future: dataFuture,
-        builder: (context, dataSnapshot) {
-          if (dataSnapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else {
-            if (dataSnapshot.error != null) {
+      body: Consumer<ProductListViewModel>(builder: (context, provider, child) {
+        return
+        FutureBuilder<List<ProductListModel>>(
+          future: provider.fetchProductData(),
+          builder: (context, dataSnapshot) {
+            if (dataSnapshot.connectionState == ConnectionState.waiting) {
               return const Center(
-                child: Text('An error occured'),
+                child: CircularProgressIndicator(),
               );
             } else {
-              return Column(
-                children: [
-                  SizedBox(
-                    height: 70.h,
-                  ),
-                  customAppbar(),
-                  Padding(
-                    padding: EdgeInsets.only(top: 30.h, left: 8.w, right: 8.w),
-                    child: SizedBox(
-                        height: 20.0, child: _horizontalList(catergories)),
-                  ),
-                  Expanded(
-                    child: Container(
-                      margin: EdgeInsets.all(8.sp),
-                      child: StaggeredGridView.countBuilder(
-                          crossAxisCount: 2,
-                          itemCount: dataSnapshot.data!.length,
-                          mainAxisSpacing: 12,
-                          physics: const ScrollPhysics(),
-                          crossAxisSpacing: 12,
-                          itemBuilder: (context, i) {
-                            return InkWell(
-                              onTap: (){
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ProductViewPage(id:dataSnapshot.data![i].id.toString())),
-                                );
-                              },
-                              child: Card(
-                                margin: EdgeInsets.zero,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8.sp)),
-                                child: Container(
-                                  height: i % 2 == 0 ? 230.h : 150.h,
-                                  margin: EdgeInsets.only(
-                                      top: 5.h,
-                                      bottom: 35.h,
-                                      left: 5.w,
-                                      right: 5.w),
-                                  child: imageView(dataSnapshot.data![i]),
-                                ),
-                              ),
-                            );
-                          },
-                          staggeredTileBuilder: (index) {
-                            return const StaggeredTile.fit(1);
-                          }),
+              if (dataSnapshot.error != null) {
+                return const Center(
+                  child: Text('An error occured'),
+                );
+              } else {
+                return Column(
+                  children: [
+                    SizedBox(
+                      height: 70.h,
                     ),
-                  )
-                ],
-              );
+                    customAppbar(),
+                    Padding(
+                      padding: EdgeInsets.only(top: 30.h, left: 8.w, right: 8.w),
+                      child: SizedBox(
+                          height: 20.0, child: _horizontalList(catergories)),
+                    ),
+                    Expanded(
+                      child: Container(
+                        margin: EdgeInsets.all(8.sp),
+                        child: StaggeredGridView.countBuilder(
+                            crossAxisCount: 2,
+                            itemCount: dataSnapshot.data!.length,
+                            mainAxisSpacing: 12,
+                            physics: const ScrollPhysics(),
+                            crossAxisSpacing: 12,
+                            itemBuilder: (context, i) {
+                              return InkWell(
+                                onTap: (){
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ProductViewPage(id:dataSnapshot.data![i].id.toString())),
+                                  );
+                                },
+                                child: Card(
+                                  margin: EdgeInsets.zero,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8.sp)),
+                                  child: Container(
+                                    height: i % 2 == 0 ? 230.h : 150.h,
+                                    margin: EdgeInsets.only(
+                                        top: 5.h,
+                                        bottom: 35.h,
+                                        left: 5.w,
+                                        right: 5.w),
+                                    child: imageView(dataSnapshot.data![i]),
+                                  ),
+                                ),
+                              );
+                            },
+                            staggeredTileBuilder: (index) {
+                              return const StaggeredTile.fit(1);
+                            }),
+                      ),
+                    )
+                  ],
+                );
+              }
             }
-          }
-        },
-      ),
+          },
+        );
+      }),
+
+
+
     );
   }
 

@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider<LoginViewModel>(create: (_) => LoginViewModel()),
+        ChangeNotifierProvider<ProductListViewModel>(create: (_)=>ProductListViewModel())
       ],
       child: ScreenUtilInit(
           designSize: const Size(360, 690),
